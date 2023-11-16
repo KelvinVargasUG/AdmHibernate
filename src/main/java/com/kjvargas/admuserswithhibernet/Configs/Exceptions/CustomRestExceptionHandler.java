@@ -1,6 +1,6 @@
 package com.kjvargas.admuserswithhibernet.Configs.Exceptions;
 
-import com.kjvargas.admuserswithhibernet.Entitys.ApiError;
+import com.kjvargas.admuserswithhibernet.Entitys.ApiResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         for (ObjectError error : ex.getBindingResult().getGlobalErrors()) {
             errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
         }
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, errors);
-        return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
+        ApiResponse apiResponse = new ApiResponse(HttpStatus.BAD_REQUEST, errors);
+        return handleExceptionInternal(ex, apiResponse, headers, apiResponse.getStatus(), request);
     }
 }

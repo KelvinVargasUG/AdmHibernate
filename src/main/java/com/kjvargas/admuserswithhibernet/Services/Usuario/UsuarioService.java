@@ -3,6 +3,7 @@ package com.kjvargas.admuserswithhibernet.Services.Usuario;
 import com.kjvargas.admuserswithhibernet.Entitys.Usuario.Rol;
 import com.kjvargas.admuserswithhibernet.Entitys.Usuario.Usuario;
 import com.kjvargas.admuserswithhibernet.Repositories.UsuarioRepository;
+import com.kjvargas.admuserswithhibernet.Repositories.UsuarioRolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ import java.util.List;
 public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    UsuarioRolRepository usuarioRolRepository;
 
     public List<Usuario> findAllUser() {
         List<Usuario> usuarios = usuarioRepository.find_all_users();
@@ -46,11 +50,30 @@ public class UsuarioService {
 
     }
 
-    public Usuario updateUser(Usuario usuario) {
+    public Usuario updateUser(Usuario usuario, Long id) {
         Usuario usuarioByid = findByIdUser(usuario.getId());
         if (usuarioByid.getId() == null) {
             throw new RuntimeException("El usuario no existe");
         }
+        if(usuario.getId() != null){
+            usuarioByid.setId(usuario.getId());
+        }
+        if(usuario.getNombre() != null){
+            usuarioByid.setNombre(usuario.getNombre());
+        }
+        if(usuario.getApellido() != null){
+            usuarioByid.setApellido(usuario.getApellido());
+        }
+        if(usuario.getEmail() != null){
+            usuarioByid.setEmail(usuario.getEmail());
+        }
+        if(usuario.getPassword() != null){
+            usuarioByid.setPassword(usuario.getPassword());
+        }
+        if(usuario.getEstado() != null){
+            usuarioByid.setEstado(usuario.getEstado());
+        }
+
         return this.usuarioRepository.save(usuario);
     }
 
@@ -70,15 +93,20 @@ public class UsuarioService {
         return usuario;
     }
 
-    public Usuario updateRolUser(Long id_rol, Long id_user) {
-        Usuario usuario = usuarioRepository.updateRolUser(id_rol, id_user);
-        if (usuario == null) {
-            throw new RuntimeException("El usuario no existe");
+    public int updateRolUser(Integer id_rol, Integer id_user) {
+        this.findByIdUser(Long.valueOf(id_user));
+        int rowUpdate = usuarioRolRepository.updateRolUser(id_rol, id_user);
+        if (rowUpdate == 0) {
+            throw new RuntimeException("No se pudo actualizar el rol del usuario");
         }
-        return usuario;
+        return rowUpdate;
     }
 
-    public void habilitarUsuario(Long id) {
-        usuarioRepository.habilitar_usuario(id);
+    public int habilitarUsuario(Long id) {
+        int rowUpdate = usuarioRepository.habilitar_usuario(id);
+        if (rowUpdate == 0) {
+            throw new RuntimeException("No se pudo habilitar el usuario");
+        }
+        return rowUpdate;
     }
 }

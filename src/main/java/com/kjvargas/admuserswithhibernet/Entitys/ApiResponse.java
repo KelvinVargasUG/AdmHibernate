@@ -9,11 +9,11 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class ApiError {
+public class ApiResponse {
     private HttpStatus status;
     private List<String> errors;
 
-    public static ApiError fromMessage(HttpStatus status, String message) {
-        return new ApiError(status, Collections.singletonList(message));
+    public static ApiResponse fromMessage(HttpStatus status, String message) {
+        return new ApiResponse(status, Collections.singletonList(message));
     }
 }
