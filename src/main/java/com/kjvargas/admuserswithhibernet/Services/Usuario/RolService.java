@@ -15,6 +15,16 @@ public class RolService {
 
     public List<Rol> findAllRoles() {
         List<Rol> roles = rolRepository.findAll();
+        if (roles.isEmpty()) {
+            throw new RuntimeException("No hay roles registrados");
+        }
+        return roles;
+    }
+
+    public List<Rol> findRolByUserId(Integer id) {
+        List<Rol> roles = this.rolRepository.findRolByUserId(id);
+        if(roles.isEmpty())
+            throw new RuntimeException("No hay roles");
         return roles;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,7 +22,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping
-    //@PreAuthorize("hasAuthority('Rol_Admin')")
+    @PreAuthorize("hasAuthority('Rol_Admin')")
     public ResponseEntity<?> createUser(@Valid @RequestBody Usuario usuario) {
         try {
             if (usuario.getPassword() == null || usuario.getPassword().isEmpty()) {
@@ -44,7 +45,7 @@ public class UsuarioController {
 
 
     @GetMapping
-    //@PreAuthorize("hasAuthority('Rol_Admin')")
+    @PreAuthorize("hasAuthority('Rol_Admin')")
     public ResponseEntity<?> findAllUser() {
         try {
             return ResponseEntity.ok(usuarioService.findAllUser());
@@ -74,7 +75,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    //@PreAuthorize("hasAuthority('Rol_Admin')")
+    @PreAuthorize("hasAuthority('Rol_Admin')")
     public ResponseEntity<?> deleteUser(@Valid @PathVariable Long id) {
         try {
             usuarioService.deleteUser(id);
