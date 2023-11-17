@@ -1,5 +1,6 @@
 package com.kjvargas.admuserswithhibernet.Entities.Usuario;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kjvargas.admuserswithhibernet.Entities.CamposObligatorios;
 import lombok.Data;

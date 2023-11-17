@@ -15,4 +15,6 @@ public interface RolRepository extends JpaRepository<Rol, Long> {
             "INNER JOIN Rol r ON r.id = ur.idRol " +
             "WHERE ur.estado IS NOT NULL and ur.idUsuario = :idUser")
     List<Rol> findRolByUserId(@Param("idUser") Integer id);
+
+    Rol findRolByNombre(String nombre);
 }

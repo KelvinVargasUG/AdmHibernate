@@ -59,7 +59,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    // @PreAuthorize("hasAuthority('Rol_Admin')")
+    @PreAuthorize("hasAuthority('Rol_Admin')")
     public ResponseEntity<?> findByIdUser(@Valid @PathVariable Long id) {
         try {
             return ResponseEntity.ok(usuarioService.findByIdUser(id));
@@ -69,7 +69,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    // @PreAuthorize("hasAuthority('Rol_Admin') or hasAuthority('Rol_User')")
+    @PreAuthorize("hasAuthority('Rol_Admin') or hasAuthority('Rol_User')")
     public ResponseEntity<?> updateUser(@Valid @RequestBody Usuario usuario, @PathVariable Long id) {
         try {
             return ResponseEntity.ok(usuarioRolService.updateUser(usuario, id));
@@ -91,7 +91,7 @@ public class UsuarioController {
 
 
     @GetMapping("/comprobar_exit_email")
-    // @PreAuthorize("hasAuthority('Rol_Admin')")
+    @PreAuthorize("hasAuthority('Rol_Admin')")
     public ResponseEntity<?> comprobarExistenciaEmail(@Valid @RequestParam("email") String email) {
         try {
             return ResponseEntity.ok(usuarioService.findByEmail(email));
@@ -101,7 +101,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{idUser}/update_rol/{idRol}")
-    // @PreAuthorize("hasAuthority('Rol_Admin')")
+    @PreAuthorize("hasAuthority('Rol_Admin')")
     public ResponseEntity<?> updateRol(@Valid @PathVariable int idRol, @PathVariable int idUser) {
         try {
             usuarioRolService.updateRolUser(idRol, idUser);

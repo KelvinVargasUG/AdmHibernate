@@ -2,6 +2,7 @@ package com.kjvargas.admuserswithhibernet.Services.Usuario;
 
 import com.kjvargas.admuserswithhibernet.Entities.Usuario.Rol;
 import com.kjvargas.admuserswithhibernet.Entities.Usuario.Usuario;
+import com.kjvargas.admuserswithhibernet.Repositories.RolRepository;
 import com.kjvargas.admuserswithhibernet.Repositories.UsuarioRepository;
 import com.kjvargas.admuserswithhibernet.Repositories.UsuarioRolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,14 @@ public class UsuarioRolService {
     UsuarioRolRepository usuarioRolRepository;
 
     @Autowired
-    UsuarioService usuarioService;
+    RolRepository rolRepository;
+
 
     public int updateRolUser(Integer id_rol, Integer id_user) {
-        this.usuarioService.findByIdUser(Long.valueOf(id_user));
+        Usuario usuarioById = this.usuarioRepository.findUsersById(Long.valueOf(id_user));
+        if (usuarioById == null) {
+            throw new RuntimeException("El usuario no existe");
+        }
         int rowUpdate = usuarioRolRepository.updateRolUser(id_rol, id_user);
         if (rowUpdate == 0) {
             throw new RuntimeException("No se pudo actualizar el rol del usuario");
@@ -39,15 +44,17 @@ public class UsuarioRolService {
         }
         String passwordEncrypt = this.bCryptPasswordEncoder.encode(usuario.getPassword());
         usuario.setPassword(passwordEncrypt);
-        Rol rol = new Rol();
-        rol.setId(2L);
+        Rol rol = rolRepository.findRolByNombre("Rol_User");
         usuario.setRoles(Collections.singletonList(rol));
-        return usuarioRepository.save(usuario);
+
+        Usuario UsuarioResponse = usuarioRepository.save(usuario);
+        usuario.setPassword(null);
+        return UsuarioResponse;
 
     }
 
     public Usuario updateUser(Usuario usuario, Long id) {
-        Usuario usuarioByid = this.usuarioService.findByIdUser(usuario.getId());
+        Usuario usuarioByid = this.usuarioRepository.findUsersById(usuario.getId());
         if (usuarioByid.getId() == null) {
             throw new RuntimeException("El usuario no existe");
         }
