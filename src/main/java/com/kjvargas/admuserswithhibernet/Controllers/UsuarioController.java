@@ -62,7 +62,9 @@ public class UsuarioController {
     @PreAuthorize("hasAuthority('Rol_Admin')")
     public ResponseEntity<?> findByIdUser(@Valid @PathVariable Long id) {
         try {
-            return ResponseEntity.ok(usuarioService.findByIdUser(id));
+            Usuario usuarioResponse = usuarioService.findByIdUser(id);
+            usuarioResponse.setPassword(null);
+            return ResponseEntity.ok(usuarioResponse);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.fromMessage(HttpStatus.BAD_REQUEST, e.getMessage()));
         }

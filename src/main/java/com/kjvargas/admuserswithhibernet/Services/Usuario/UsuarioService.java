@@ -73,6 +73,7 @@ public class UsuarioService {
             log.info("Creando rol administrador");
             rol = new Rol();
             rol.setNombre("Rol_Admin");
+            rol.setEstado("A");
             rol.setDescripcion("Rol de administrador puede crear y eliminar usuarios");
             rolRepository.save(rol);
             log.info("Rol administrador creado");
@@ -83,6 +84,7 @@ public class UsuarioService {
             log.info("Creando rol usuario");
             rol = new Rol();
             rol.setNombre("Rol_User");
+            rol.setEstado("A");
             rol.setDescripcion("Rol con limitados permisos");
             rolRepository.save(rol);
             log.info("Rol usuario creado");
@@ -106,7 +108,6 @@ public class UsuarioService {
         if (usuario == null) {
             throw new RuntimeException("No se encontro el usuario");
         }
-        usuario.setPassword(null);
         return usuario;
     }
 

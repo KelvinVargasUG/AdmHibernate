@@ -44,13 +44,12 @@ public class UsuarioRolService {
         }
         String passwordEncrypt = this.bCryptPasswordEncoder.encode(usuario.getPassword());
         usuario.setPassword(passwordEncrypt);
+        usuario.setEstado("A");
         Rol rol = rolRepository.findRolByNombre("Rol_User");
         usuario.setRoles(Collections.singletonList(rol));
-
-        Usuario UsuarioResponse = usuarioRepository.save(usuario);
-        usuario.setPassword(null);
-        return UsuarioResponse;
-
+        Usuario usuarioResponse = usuarioRepository.save(usuario);
+        usuarioResponse.setPassword(null);
+        return usuarioResponse;
     }
 
     public Usuario updateUser(Usuario usuario, Long id) {

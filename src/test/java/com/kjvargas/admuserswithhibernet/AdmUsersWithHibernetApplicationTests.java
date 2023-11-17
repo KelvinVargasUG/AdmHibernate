@@ -1,10 +1,10 @@
-package com.kjvargas.admuserswithhibernetwithhibernet;
+package com.kjvargas.admuserswithhibernet;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class admuserswithhibernetWithHibernetApplicationTests {
+class AdmUsersWithHibernetApplicationTests {
 
 	@Test
 	void contextLoads() {
