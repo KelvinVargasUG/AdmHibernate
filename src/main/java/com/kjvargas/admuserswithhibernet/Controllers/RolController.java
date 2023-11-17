@@ -2,7 +2,7 @@ package com.kjvargas.admuserswithhibernet.Controllers;
 
 //import com.kjvargas.admuserswithhibernet.Services.Usuario.RolService;
 //import com.kjvargas.admuserswithhibernet.Services.Usuario.UsuarioRolService;
-import com.kjvargas.admuserswithhibernet.Entitys.ApiResponse;
+import com.kjvargas.admuserswithhibernet.Entities.ApiResponse;
 import com.kjvargas.admuserswithhibernet.Services.Usuario.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

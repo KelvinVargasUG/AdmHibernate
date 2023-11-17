@@ -1,8 +1,9 @@
 package com.kjvargas.admuserswithhibernet.Controllers;
 
-import com.kjvargas.admuserswithhibernet.Entitys.ApiResponse;
+import com.kjvargas.admuserswithhibernet.Entities.ApiResponse;
 //import com.kjvargas.admuserswithhibernet.Services.Usuario.UsuarioRolService;
-import com.kjvargas.admuserswithhibernet.Entitys.Usuario.Usuario;
+import com.kjvargas.admuserswithhibernet.Entities.Usuario.Usuario;
+import com.kjvargas.admuserswithhibernet.Services.Usuario.UsuarioRolService;
 import com.kjvargas.admuserswithhibernet.Services.Usuario.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private UsuarioRolService usuarioRolService;
+
     @PostMapping
     @PreAuthorize("hasAuthority('Rol_Admin')")
     public ResponseEntity<?> createUser(@Valid @RequestBody Usuario usuario) {
@@ -29,7 +33,7 @@ public class UsuarioController {
                 return ResponseEntity.badRequest().body(ApiResponse.fromMessage(HttpStatus.BAD_REQUEST, "El password es requerido"));
             }
             usuario.setEstado("A");
-            return ResponseEntity.ok(usuarioService.createUser(usuario));
+            return ResponseEntity.ok(usuarioRolService.createUser(usuario));
         } catch (Exception e) {
             Usuario emailExist = usuarioService.findByEmail(usuario.getEmail());
             if (emailExist != null) {
@@ -68,7 +72,7 @@ public class UsuarioController {
     // @PreAuthorize("hasAuthority('Rol_Admin') or hasAuthority('Rol_User')")
     public ResponseEntity<?> updateUser(@Valid @RequestBody Usuario usuario, @PathVariable Long id) {
         try {
-            return ResponseEntity.ok(usuarioService.updateUser(usuario, id));
+            return ResponseEntity.ok(usuarioRolService.updateUser(usuario, id));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.fromMessage(HttpStatus.BAD_REQUEST, e.getMessage()));
         }
@@ -100,7 +104,7 @@ public class UsuarioController {
     // @PreAuthorize("hasAuthority('Rol_Admin')")
     public ResponseEntity<?> updateRol(@Valid @PathVariable int idRol, @PathVariable int idUser) {
         try {
-            usuarioService.updateRolUser(idRol, idUser);
+            usuarioRolService.updateRolUser(idRol, idUser);
             return ResponseEntity.ok(ApiResponse.fromMessage(HttpStatus.OK, "Se actualizó el rol del usuario correctamente"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.fromMessage(HttpStatus.BAD_REQUEST, e.getMessage()));

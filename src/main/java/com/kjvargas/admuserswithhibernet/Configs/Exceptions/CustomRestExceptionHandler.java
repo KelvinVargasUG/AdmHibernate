@@ -1,6 +1,6 @@
 package com.kjvargas.admuserswithhibernet.Configs.Exceptions;
 
-import com.kjvargas.admuserswithhibernet.Entitys.ApiResponse;
+import com.kjvargas.admuserswithhibernet.Entities.ApiResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

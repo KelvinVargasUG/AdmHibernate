@@ -1,6 +1,6 @@
 package com.kjvargas.admuserswithhibernet.Repositories;
 
-import com.kjvargas.admuserswithhibernet.Entitys.Usuario.Rol;
+import com.kjvargas.admuserswithhibernet.Entities.Usuario.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

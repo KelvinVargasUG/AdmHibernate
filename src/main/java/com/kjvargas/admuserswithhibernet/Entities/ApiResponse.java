@@ -1,4 +1,4 @@
-package com.kjvargas.admuserswithhibernet.Entitys;
+package com.kjvargas.admuserswithhibernet.Entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.kjvargas.admuserswithhibernet.Services.Usuario;
 
-import com.kjvargas.admuserswithhibernet.Entitys.Usuario.Rol;
+import com.kjvargas.admuserswithhibernet.Entities.Usuario.Rol;
 import com.kjvargas.admuserswithhibernet.Repositories.RolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

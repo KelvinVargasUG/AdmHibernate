@@ -1,10 +1,12 @@
 package com.kjvargas.admuserswithhibernet.Services.Usuario;
 
-import com.kjvargas.admuserswithhibernet.Entitys.Usuario.Rol;
-import com.kjvargas.admuserswithhibernet.Entitys.Usuario.Usuario;
+import com.kjvargas.admuserswithhibernet.Entities.Usuario.Rol;
+import com.kjvargas.admuserswithhibernet.Entities.Usuario.Usuario;
 import com.kjvargas.admuserswithhibernet.Repositories.UsuarioRepository;
 import com.kjvargas.admuserswithhibernet.Repositories.UsuarioRolRepository;
+import com.kjvargas.admuserswithhibernet.Security.Entities.UsuarioSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,11 +16,9 @@ import java.util.List;
 @Service
 @Transactional
 public class UsuarioService {
-    @Autowired
-    UsuarioRepository usuarioRepository;
 
     @Autowired
-    UsuarioRolRepository usuarioRolRepository;
+    UsuarioRepository usuarioRepository;
 
     public List<Usuario> findAllUser() {
         List<Usuario> usuarios = usuarioRepository.findAllUsers();
@@ -34,45 +34,6 @@ public class UsuarioService {
             throw new RuntimeException("No se encontro el usuario");
         }
         return usuario;
-    }
-
-    public Usuario createUser(Usuario usuario) {
-        if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
-            throw new RuntimeException("El email no puede ser nulo o vacio");
-        }
-
-        Rol rol = new Rol();
-        rol.setId(2L);
-        usuario.setRoles(Collections.singletonList(rol));
-        return usuarioRepository.save(usuario);
-
-    }
-
-    public Usuario updateUser(Usuario usuario, Long id) {
-        Usuario usuarioByid = findByIdUser(usuario.getId());
-        if (usuarioByid.getId() == null) {
-            throw new RuntimeException("El usuario no existe");
-        }
-        if(usuario.getId() != null){
-            usuarioByid.setId(usuario.getId());
-        }
-        if(usuario.getNombre() != null){
-            usuarioByid.setNombre(usuario.getNombre());
-        }
-        if(usuario.getApellido() != null){
-            usuarioByid.setApellido(usuario.getApellido());
-        }
-        if(usuario.getEmail() != null){
-            usuarioByid.setEmail(usuario.getEmail());
-        }
-        if(usuario.getPassword() != null){
-            usuarioByid.setPassword(usuario.getPassword());
-        }
-        if(usuario.getEstado() != null){
-            usuarioByid.setEstado(usuario.getEstado());
-        }
-
-        return this.usuarioRepository.save(usuario);
     }
 
     public int deleteUser(long id) {
@@ -91,13 +52,16 @@ public class UsuarioService {
         return usuario;
     }
 
-    public int updateRolUser(Integer id_rol, Integer id_user) {
-        this.findByIdUser(Long.valueOf(id_user));
-        int rowUpdate = usuarioRolRepository.updateRolUser(id_rol, id_user);
-        if (rowUpdate == 0) {
-            throw new RuntimeException("No se pudo actualizar el rol del usuario");
+    public UsuarioSecurity findByIdEmailLoad(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        if (usuario == null) {
+            throw new RuntimeException("El usuario no existe");
         }
-        return rowUpdate;
+        UsuarioSecurity usuarioSecurity = new UsuarioSecurity();
+        usuarioSecurity.setEmail(usuario.getEmail());
+        usuarioSecurity.setPassword(usuario.getPassword());
+        usuarioSecurity.setRoles(usuario.getRoles());
+        return usuarioSecurity;
     }
 
     public int habilitarUsuario(Long id) {

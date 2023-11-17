@@ -1,4 +1,4 @@
-package com.kjvargas.admuserswithhibernet.Entitys;
+package com.kjvargas.admuserswithhibernet.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

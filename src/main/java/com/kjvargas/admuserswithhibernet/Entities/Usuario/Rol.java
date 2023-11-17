@@ -1,7 +1,7 @@
-package com.kjvargas.admuserswithhibernet.Entitys.Usuario;
+package com.kjvargas.admuserswithhibernet.Entities.Usuario;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.kjvargas.admuserswithhibernet.Entitys.CamposObligatorios;
+import com.kjvargas.admuserswithhibernet.Entities.CamposObligatorios;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
