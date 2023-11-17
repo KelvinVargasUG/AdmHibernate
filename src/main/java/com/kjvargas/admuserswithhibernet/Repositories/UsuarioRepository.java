@@ -7,20 +7,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query(value = "SELECT * FROM usuario u WHERE u.estado IS NOT NULL " +
                     "ORDER BY u.id_usuario DESC", nativeQuery = true)
-    List<Usuario> find_all_users();
+    List<Usuario> findAllUsers();
 
     @Query(value = "SELECT u FROM Usuario u " +
             "       WHERE u.estado IS NOT NULL and u.id = :id ")
-    Usuario find_users_by_id(@Param("id") Long id);
+    Usuario findUsersById(@Param("id") Long id);
 
 
     @Query(value = "SELECT u from Usuario u where u.email = :email")
@@ -28,7 +26,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Modifying
     @Query(value ="UPDATE Usuario u SET u.estado = 'A' WHERE u.id = :id")
-    int habilitar_usuario(@Param("id") Long id);
+    int habilitarUsuario(@Param("id") Long id);
 
     @Modifying
     @Query(value ="UPDATE Usuario u SET u.estado = null WHERE u.id = :id")

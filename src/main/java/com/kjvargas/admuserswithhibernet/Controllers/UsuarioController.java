@@ -20,10 +20,6 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    /*
-       @Autowired
-       private UsuarioRolService usuarioRolService;
-   */
     @PostMapping
     //@PreAuthorize("hasAuthority('Rol_Admin')")
     public ResponseEntity<?> createUser(@Valid @RequestBody Usuario usuario) {

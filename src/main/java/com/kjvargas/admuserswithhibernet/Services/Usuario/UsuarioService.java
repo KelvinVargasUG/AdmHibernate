@@ -5,11 +5,9 @@ import com.kjvargas.admuserswithhibernet.Entitys.Usuario.Usuario;
 import com.kjvargas.admuserswithhibernet.Repositories.UsuarioRepository;
 import com.kjvargas.admuserswithhibernet.Repositories.UsuarioRolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class UsuarioService {
     UsuarioRolRepository usuarioRolRepository;
 
     public List<Usuario> findAllUser() {
-        List<Usuario> usuarios = usuarioRepository.find_all_users();
+        List<Usuario> usuarios = usuarioRepository.findAllUsers();
         if (usuarios.isEmpty()) {
             throw new RuntimeException("No hay usuarios registrados");
         }
@@ -31,7 +29,7 @@ public class UsuarioService {
     }
 
     public Usuario findByIdUser(Long id) {
-        Usuario usuario = usuarioRepository.find_users_by_id(id);
+        Usuario usuario = usuarioRepository.findUsersById(id);
         if (usuario == null) {
             throw new RuntimeException("No se encontro el usuario");
         }
@@ -103,7 +101,7 @@ public class UsuarioService {
     }
 
     public int habilitarUsuario(Long id) {
-        int rowUpdate = usuarioRepository.habilitar_usuario(id);
+        int rowUpdate = usuarioRepository.habilitarUsuario(id);
         if (rowUpdate == 0) {
             throw new RuntimeException("No se pudo habilitar el usuario");
         }
